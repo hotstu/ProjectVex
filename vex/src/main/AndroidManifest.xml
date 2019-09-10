@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="github.hotstu.vex">
+
+    <application
+        >
+        <activity android:name=".VexActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.android.intent.action.WEEX" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.taobao.android.intent.category.WEEX" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:name=".InitHooker"
+            android:authorities="${applicationId}.vex-init"
+            android:exported="false"
+            android:initOrder="100"
+            android:multiprocess="false" />
+    </application>
+
+</manifest>
