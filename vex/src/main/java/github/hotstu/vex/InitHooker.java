@@ -14,6 +14,9 @@ import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKManager;
 
+import github.hotstu.vex.adapter.PicassoBasedDrawableLoader;
+import github.hotstu.vex.adapter.PicassoImageAdapter;
+
 /**
  * @author hglf [hglf](https://github.com/hotstu)
  * @desc
@@ -22,21 +25,23 @@ import com.taobao.weex.WXSDKManager;
 public class InitHooker extends ContentProvider {
     @Override
     public boolean onCreate() {
+        Application application = (Application) getContext();
         WXEnvironment.setOpenDebugLog(true);
         WXEnvironment.setApkDebugable(true);
         WXSDKEngine.addCustomOptions("appName", "WXSample");
         WXSDKEngine.addCustomOptions("appGroup", "WXApp");
-        InitConfig config = new InitConfig.Builder()
 
-        //TODO 留出接口
-                //imageLib interface
-                //.setImgAdapter(new FrescoImageAdapter())
-                //network lib interface
-                //.setHttpAdapter(new InterceptWXHttpAdapter())
+        //Fresco.initialize(application);
+        InitConfig config = new InitConfig.Builder()
+                //TODO 留出接口
+                .setImgAdapter(new PicassoImageAdapter())
+                .setDrawableLoader(new PicassoBasedDrawableLoader(application))
+                //.setJSExceptionAdapter(new JSExceptionAdapter())
+                //.setApmGenerater(new ApmGenerator())
                 .build();
 
 
-        WXSDKEngine.initialize((Application) getContext(), config);
+        WXSDKEngine.initialize(application, config);
         WXSDKManager.getInstance().setNavigator(new VexNavigator());
 //        try {
 //            WXSDKEngine.registerComponent("mycomponent",WXMask.class);
