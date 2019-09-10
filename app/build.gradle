@@ -31,6 +31,8 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.1.46.android'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     //support library dependencies
+    //include picasso if you use picasso adapter
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     testImplementation 'junit:junit:4.12'
     implementation project(path: ':vex')

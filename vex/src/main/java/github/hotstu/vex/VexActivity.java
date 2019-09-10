@@ -1,18 +1,23 @@
 package github.hotstu.vex;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
+
+import github.hotstu.naiue.util.MOStatusBarHelper;
 
 /**
  * @author hglf [hglf](https://github.com/hotstu)
@@ -27,6 +32,7 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MOStatusBarHelper.translucent(this);
         setContentView(R.layout.activity_vex);
 
         mUri = getIntent().getData();
@@ -51,14 +57,14 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
             mWXSDKInstance.renderByUrl(pageName, mUri.toString(), null, null, WXRenderStrategy.APPEND_ASYNC);
         } else {
             Log.d(TAG, "init-->2");
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             final long[] delayed = new long[1];
             delayed[0] = 100;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (WXSDKEngine.isInitialized()) {
-                        Log.d(TAG, "init-->3:" +  delayed[0]);
+                        Log.d(TAG, "init-->3:" + delayed[0]);
                         mWXSDKInstance.renderByUrl(pageName, mUri.toString(), null, null, WXRenderStrategy.APPEND_ASYNC);
                     } else {
                         delayed[0] += 100;
@@ -89,6 +95,39 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
     @Override
     public void onException(WXSDKInstance instance, String errCode, String msg) {
         Log.e(TAG, msg + errCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (mWXSDKInstance != null) {
+            mWXSDKInstance.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mWXSDKInstance != null) {
+            mWXSDKInstance.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mWXSDKInstance != null && mWXSDKInstance.onCreateOptionsMenu(menu)) {
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWXSDKInstance != null && mWXSDKInstance.onBackPressed()) {
+            //NOOP
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
