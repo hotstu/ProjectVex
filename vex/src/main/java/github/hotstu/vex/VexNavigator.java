@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.appfram.navigator.INavigator;
+import com.taobao.weex.common.Constants;
 
 /**
  * @author hglf [hglf](https://github.com/hotstu)
@@ -23,13 +24,17 @@ public class VexNavigator implements INavigator {
     public boolean push(Activity activity, String param) {
         Uri url = parse(param);
         if (url != null) {
-            if ("vex".equals(url.getScheme())) {
-                Uri rebuild = url.buildUpon().scheme("file").authority("assets").build();
-                Intent i = new Intent(activity, VexActivity.class);
-                i.putExtra("url", rebuild.toString());
-                activity.startActivity(i);
-                return true;
+            String scheme = url.getScheme();
+            if (TextUtils.isEmpty(scheme)) {
+                Uri.Builder builder = url.buildUpon();
+                builder.scheme(Constants.Scheme.HTTP);
+                url = builder.build();
             }
+            Intent i = new Intent(activity, VexActivity.class);
+            i.putExtra("url", url.toString());
+            activity.startActivity(i);
+            return true;
+
         }
         //we only handle  schema(vex://) others are delegate to others
         return false;

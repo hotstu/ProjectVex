@@ -1,22 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="github.hotstu.vex">
 
-    <application
-        >
-        <activity android:name=".VexActivity"
+    <application>
+        <activity
+            android:name=".VexActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.taobao.android.intent.action.WEEX" />
+                <action android:name="${applicationId}.action.WEEX" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.taobao.android.intent.category.WEEX" />
+                <category android:name="${applicationId}.category.WEEX" />
 
                 <action android:name="android.intent.action.VIEW" />
 
