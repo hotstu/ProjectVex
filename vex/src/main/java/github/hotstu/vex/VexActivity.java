@@ -34,7 +34,6 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
         super.onCreate(savedInstanceState);
         MOStatusBarHelper.translucent(this);
         setContentView(R.layout.activity_vex);
-
         mUri = getIntent().getData();
         if (mUri == null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
