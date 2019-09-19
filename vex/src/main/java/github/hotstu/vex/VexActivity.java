@@ -66,6 +66,7 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
                         Log.d(TAG, "init-->3:" + delayed[0]);
                         mWXSDKInstance.renderByUrl(pageName, mUri.toString(), null, null, WXRenderStrategy.APPEND_ASYNC);
                     } else {
+                        Log.d(TAG, "init-->4:" + delayed[0]);
                         delayed[0] += 100;
                         handler.postDelayed(this, 100);
                     }
@@ -93,7 +94,7 @@ public class VexActivity extends VexBaseActivity implements IWXRenderListener {
 
     @Override
     public void onException(WXSDKInstance instance, String errCode, String msg) {
-        Log.e(TAG, msg + errCode);
+        Log.e(TAG, "onException" + msg + errCode);
     }
 
     @Override

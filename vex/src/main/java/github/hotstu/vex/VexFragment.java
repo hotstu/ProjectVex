@@ -50,7 +50,7 @@ public class VexFragment extends Fragment implements IWXRenderListener {
             return;
         }
 
-        mWXSDKInstance = new WXSDKInstance(getContext());
+        mWXSDKInstance = new WXSDKInstance(requireActivity());
         mWXSDKInstance.registerRenderListener(this);
     }
 
